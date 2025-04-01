@@ -32,7 +32,7 @@ const importLargeJSON = async (filePath) => {
           data = [data];
         }
 
-        // ✅ Filter out objects missing required fields
+       
         const validData = data.filter(item => item.name && item.category && item.operatingSystem && item.sbom);
 
         if (validData.length === 0) {
@@ -40,7 +40,7 @@ const importLargeJSON = async (filePath) => {
           return resolve();
         }
 
-        // Insert data in batches
+       
         const batchSize = 1000;
         for (let i = 0; i < validData.length; i += batchSize) {
           const batch = validData.slice(i, i + batchSize);
