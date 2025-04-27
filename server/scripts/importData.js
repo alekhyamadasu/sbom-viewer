@@ -27,12 +27,12 @@ const importLargeJSON = async (filePath) => {
       try {
         let data = JSON.parse(jsonString);
 
-        // If JSON is an object, wrap it in an array
+       
         if (!Array.isArray(data)) {
           data = [data];
         }
 
-       
+        
         const validData = data.filter(item => item.name && item.category && item.operatingSystem && item.sbom);
 
         if (validData.length === 0) {
