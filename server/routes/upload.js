@@ -4,8 +4,6 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Device = require('../models/Device');
-
-
 const upload = multer({ dest: 'uploads/' });
 
 
