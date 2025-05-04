@@ -1,10 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5200, 
+    port: 5200,
   },
-})
+  optimizeDeps: {
+    exclude: ['react-router', 'react-router-dom'],
+  },
+  resolve: {
+    alias: {
+      'react-router': '/dev/null', 
+      'react-router-dom': '/dev/null',
+    },
+  },
+});
