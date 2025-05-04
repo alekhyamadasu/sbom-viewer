@@ -19,12 +19,40 @@ router.get('/', async (req, res) => {
       query.operatingSystem = { $regex: os, $options: 'i' };
     }
     
-    const devices = await Device.find(query).select('name category operatingSystem');
+    const devices = await Device.find(query).select('name category operatingSystem sbom');
     res.json(devices);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
+// GET /api/devices/common-packages
+router.get('/common-packages', async (req, res) => {
+  try {
+    const devices = await Device.find();
+    const packageCount = {};
+
+    devices.forEach(device => {
+      const seen = new Set();
+      device.sbom?.forEach(pkg => {
+        if (pkg.name && !seen.has(pkg.name)) {
+          packageCount[pkg.name] = (packageCount[pkg.name] || 0) + 1;
+          seen.add(pkg.name);
+        }
+      });
+    });
+
+    const topPackages = Object.entries(packageCount)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    res.json(topPackages);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 router.get('/:id', async (req, res) => {
   try {

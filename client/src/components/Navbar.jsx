@@ -20,6 +20,7 @@ const Navbar = () => {
           <Link to="/compare" className="text-gray-300 hover:text-white font-medium">
             Compare Devices
           </Link>
+          <Link to="/statistics" className="text-gray-300 hover:text-white font-medium">Statistics</Link>
         </div>
       </div>
     </nav>
